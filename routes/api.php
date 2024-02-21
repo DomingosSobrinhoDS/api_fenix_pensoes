@@ -29,4 +29,4 @@ Route::post("/portal/login", [PortalController::class, 'login']);
 Route::post("/portal/first_login", [PortalController::class, 'first_log']);
 Route::post("/portal/get_information", [PortalController::class, 'get_information']);
 Route::post("/portal/save_token", [PortalController::class, 'new_token_api']);
-Route::get("/teste", [PortalController::class, 'teste']);
+//Route::get("/teste", [PortalController::class, 'teste']);
