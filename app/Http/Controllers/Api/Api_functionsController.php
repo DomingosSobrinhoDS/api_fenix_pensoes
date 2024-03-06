@@ -106,10 +106,10 @@ class Api_functionsController extends Controller
                     if (sizeof($post['result']['entities']) > 0) {
                         if ($post['result']['entities'][0]['fields'][4]['value'] != '' && $post['result']['entities'][0]['fields'][4]['value'] != null) {
                             if ($post['result']['entities'][0]['fields'][4]['value'] == "Male") {
-                                # code...
+                                $post['result']['entities'][0]['fields'][4]['value']="Masculino";
                             }
                             else {
-                                # code...
+                                $post['result']['entities'][0]['fields'][4]['value']="Femenino";
                             }
                         }
                         return [
@@ -150,7 +150,7 @@ class Api_functionsController extends Controller
             
                 $get=$this->get_user($bi);
 
-                if($get['email']!=0){
+                if($get['email']!=0 && $get['email'] == $email ){
                     return [
                         'id' => $get['id'],
                         'status'=>1,
