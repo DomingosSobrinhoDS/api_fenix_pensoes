@@ -20,6 +20,8 @@ use Firebase\JWT\Key;
 
 
 
+
+
 class PortalController extends Controller
 {
     public $email;
@@ -71,11 +73,32 @@ class PortalController extends Controller
             }
     }
 
-    function teste() {
+    function loade_data(Request $request) {
+        try {
+            if(env('API_TOKEN') == $request->token ){
+                $aux=$this->decodificarJWT($request->user_token);
 
+                $pageSize = $request->query('pageSize', 2);
         
+                $verify=$this->api->loading_data($aux,$pageSize);
+                                
+                    return response()->json([
+                        $verify
+                    ],200);
+                 
+            }else{
+                return response()->json([
+                    'error' => 'Acesso negado'
+                ],402);
+            }
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         
+    }
 
+    function teste(Request $request) {
         /*$response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
           ])->get('https://jsonplaceholder.typicode.com/posts/1');
@@ -204,7 +227,7 @@ class PortalController extends Controller
             if(env('API_TOKEN') == $request->token ){
                 $aux=$this->decodificarJWT($request->user_token);
                 $get_id=$this->api->get_information($aux);
-                return response()->json($get_id);
+                //return response()->json($get_id);
                 return response()->json([
                     'endereco' => $get_id['ADDRESS_COUNTRY'],
                     'iban' => $get_id['BANK_IBAN'],
