@@ -197,10 +197,11 @@ class Api_functionsController extends Controller
                                 $verify = $ano;
 
                             }elseif ($ano != $verify) {
-
+                                $empresa=$this->get_up_id($id,$ano);
                                 $data[] = [
                                     'ano' => $ano,
-                                    'total_empresa' => $this->get_up_id($id,$ano)[1],
+                                    'total_empresa' => $empresa[1],
+                                    'nome_empresa' => $empresa[2],
                                     'total_ano' => $total_ano,
                                     'mes' => $result[intval($count_ano)]['mes'], 
                                 ];
@@ -284,7 +285,7 @@ class Api_functionsController extends Controller
 
                     if (sizeof($post['result']) > 0) {
 
-                        return [$post['result'][0]['fundId'],$post['result'][0]['totalValue']];                        ;
+                        return [$post['result'][0]['fundId'],$post['result'][0]['totalValue'],$post['result'][0]['portfolioName']];                        ;
                     }else {
                         return [
                             'error'=>404,
