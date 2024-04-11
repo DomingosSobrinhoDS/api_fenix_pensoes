@@ -200,6 +200,7 @@ class Api_functionsController extends Controller
 
                                 $data[] = [
                                     'ano' => $ano,
+                                    'total_empresa' => $this->get_up_id($id,$ano)[1],
                                     'total_ano' => $total_ano,
                                     'mes' => $result[intval($count_ano)]['mes'], 
                                 ];
@@ -251,11 +252,16 @@ class Api_functionsController extends Controller
                 }
         }
 
-        function get_up_id($id) {
+        function get_up_id($id,$year=null) {
             $currentDateTime = Carbon::now();
 
             // Formatar a data e hora atuais no formato ISO 8601
-            $formattedDateTime = $currentDateTime->toISOString();
+            if ($year) {
+                $formattedDateTime =$year. "-12-31";
+            }
+            else {
+                $formattedDateTime = $currentDateTime->toISOString();
+            }
 
             $data = array(
                 "entityIdentifierList" => array(
@@ -278,7 +284,7 @@ class Api_functionsController extends Controller
 
                     if (sizeof($post['result']) > 0) {
 
-                        return $post['result'][0]["fundId"];
+                        return [$post['result'][0]['fundId'],$post['result'][0]['totalValue']];                        ;
                     }else {
                         return [
                             'error'=>404,
@@ -302,7 +308,7 @@ class Api_functionsController extends Controller
 
         function get_up($id) {
 
-            $id1 = $this->get_up_id($id);
+            $id1 = $this->get_up_id($id)[0];
             $currentDateTime = Carbon::now();
 
             // Formatar a data e hora atuais no formato ISO 8601
@@ -350,6 +356,7 @@ class Api_functionsController extends Controller
                     }
                 }
         }
+
     
     //funções auxiliares
         function verify_user($email,$bi){
