@@ -99,6 +99,13 @@ class PortalController extends Controller
     }
 
     function teste(Request $request) {
+        //$verify = DB::select('SELECT * FROM `users`');
+
+        $verify=$this->api->loading_data(541720,1);
+        //$verify=$this->api->data_formate();
+        //$verify=$this->api->get_history_principal(54172);
+        //$this->email->send($request);
+        return $verify;
         /*$response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
           ])->get('https://jsonplaceholder.typicode.com/posts/1');
@@ -301,7 +308,6 @@ class PortalController extends Controller
         }
     }
     
-
     function refreshToken($token) {
 
         try {
